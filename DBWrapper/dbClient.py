@@ -5,9 +5,14 @@ import json
 
 class MongoDatabase:
 
-    def __init__(self, host, port):
-        client = MongoClient(host = host, port = port)
-        self.db = client.faasosDB
+    def __init__(self,connection_params):
+
+        connection = MongoClient(
+            'mongodb://{user}:{password}@{host}:'
+            '{port}/{namespace}'.format(**connection_params)
+        )
+        self.db = connection.faasos
+        print(self.db)
 
     def getExistingDishes(self):
         try:
@@ -21,7 +26,9 @@ class MongoDatabase:
     def getOrders(self):
         try:
             ordersdb = self.db.orders
+            print('ordersdb:', ordersdb)
             records = dumps(ordersdb.find({}, {'_id': 0}))
+            print('records:', records)
             records = json.loads(records)
             return json.dumps({"status": 200, "message": {"data": records}})
         except:
@@ -65,4 +72,4 @@ class MongoDatabase:
             else:
                 return codes.invalidData()
         except:
-            return codes.genericException()
+            return self.getOrders()

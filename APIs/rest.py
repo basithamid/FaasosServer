@@ -2,11 +2,27 @@ from flask import  Flask, request
 from Errors import codes
 from DBWrapper import dbClient
 from flask_cors import CORS
+from pymongo import MongoClient
 import json
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-db = dbClient.MongoDatabase(host = 'localhost', port = 27017)
+connection_params = {
+    'user': 'basit',
+    'password': 'root123#',
+    'host': 'ds235180.mlab.com',
+    'port': 35180,
+    'namespace': 'faasos',
+}
+
+
+
+connection = MongoClient(
+    'mongodb://{user}:{password}@{host}:'
+    '{port}/{namespace}'.format(**connection_params)
+)
+
+db = dbClient.MongoDatabase(connection_params)
 
 @app.route('/getDishes', methods= ['GET'])
 def getDishes():
@@ -27,7 +43,6 @@ def placeOrder():
     if request.method == 'GET':
         return codes.invalidRequestMethod()
     else:
-        print(request.get_json())
         return db.placeOrder(request.get_json())
 
 @app.route('/predict', methods=['POST'])
