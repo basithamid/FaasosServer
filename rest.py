@@ -1,9 +1,9 @@
 from flask import  Flask, request
-from Errors import codes
-from DBWrapper import dbClient
+from FaasosServer.Errors import codes
+from FaasosServer.DBWrapper import dbClient
 from flask_cors import CORS
 from pymongo import MongoClient
-import json
+
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -58,6 +58,3 @@ def updateOrder():
         return codes.invalidRequestMethod()
     else:
         return db.update(request.get_json())
-
-if __name__ == '__main__':
-    app.run(host = 'localhost', port = 8000)

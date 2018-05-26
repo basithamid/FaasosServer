@@ -1,1 +1,1 @@
-web: gunicorn "APIs:rest()"
+web: gunicorn rest:app
