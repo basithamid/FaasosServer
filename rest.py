@@ -1,6 +1,6 @@
 from flask import  Flask, request
-from FaasosServer.Errors import codes
-from FaasosServer.DBWrapper import dbClient
+from Errors import codes
+from DBWrapper import dbClient
 from flask_cors import CORS
 from pymongo import MongoClient
 

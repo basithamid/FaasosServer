@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.json_util import dumps
-from FaasosServer.Errors import codes
+from Errors import codes
 import json
 
 class MongoDatabase:
