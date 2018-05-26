@@ -58,3 +58,7 @@ def updateOrder():
         return codes.invalidRequestMethod()
     else:
         return db.update(request.get_json())
+
+@app.route('/')
+def index():
+    return '<h1>Connected to server.</h1>'
