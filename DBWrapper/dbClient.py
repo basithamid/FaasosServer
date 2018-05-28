@@ -17,7 +17,7 @@ class MongoDatabase:
     def getExistingDishes(self):
         try:
             ordersdb = self.db.orders
-            records = dumps(ordersdb.find({}, {'_id': 0}))
+            records = dumps(ordersdb.find({}, {'name': 1, '_id': 0}))
             records = json.loads(records)
             return json.dumps({"status": 200 , "message":{ "data": records }})
         except:
